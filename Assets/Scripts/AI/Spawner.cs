@@ -8,7 +8,8 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        Spawn();
+        if (prefab != null)
+            Spawn();
     }
 
     private void Spawn()
