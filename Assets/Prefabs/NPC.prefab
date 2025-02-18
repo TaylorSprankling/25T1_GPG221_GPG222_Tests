@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4175351951792551745}
-  randomAmount: 10
+  randomAmount: 5
 --- !u!114 &5858032941546129601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,5 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4175351951792551745}
-  distance: 4
+  maxRays: 1
+  fieldOfView: 0
+  maxDistance: 4
   turnSpeed: 15

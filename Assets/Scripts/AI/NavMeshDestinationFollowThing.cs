@@ -1,23 +1,50 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NavMeshDestinationFollowThing : MonoBehaviour
 {
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform targetPoint;
-
     [SerializeField] private KeyCode updatePathDebugKey = KeyCode.C;
+    [SerializeField] private float turnStrength = 5f;
+    private int targetCorner = 1;
 
     // NAVMESH
     // Variable that gets filled in with the points
     private NavMeshPath path;
 
+    private void Awake()
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+    }
+
     // ONLY USE UPDATE WHILE DEVELOPING. Eventually your planner will call this only when it needs to
     private void Update()
     {
-        CalculatePath(targetPoint.position);
+        CalculatePath(targetPoint.position); // Need to change this to plan once, then play through each saved corner
     }
 
-    private void FixedUpdate() { }
+    private void FixedUpdate()
+    {
+        if (path == null)
+        {
+            return;
+        }
+        float angle = Vector3.SignedAngle(transform.forward, path.corners[targetCorner] - transform.position, Vector3.up);
+        
+        if (angle > 0)
+        {
+            rb.AddRelativeTorque(0, turnStrength, 0);
+        }
+        else
+        {
+            rb.AddRelativeTorque(0, -turnStrength, 0);
+        }
+    }
 
     private void CalculatePath(Vector3 target)
     {
@@ -31,6 +58,8 @@ public class NavMeshDestinationFollowThing : MonoBehaviour
         {
             Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.green);
         }
+
+        targetCorner = 1;
 
         if (calculatedPath)
             return;
