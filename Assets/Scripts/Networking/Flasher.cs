@@ -16,15 +16,14 @@ public class Flasher : NetworkBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (IsServer) // This is a handy variable you can use to prevent code from running on the client
+        if (!IsServer) // This is a handy variable you can use to prevent code from running on the client
+            return;
+        if (Random.Range(0, 100) <= flashProbability)
         {
-            if (Random.Range(0, 100) <= flashProbability)
-            {
-                // The !light.enabled bit is just how I’m toggling the bool back and forth. It means NOT
-                ChangeLightStateClientRpc(!light.enabled); // Note I send through variables over the network. You can send multiple ones with commas, BUT you CAN’T send references to other objects as you normally would. There are other ways to do that though
-            }
+            // The !light.enabled bit is just how I’m toggling the bool back and forth. It means NOT
+            ChangeLightStateClientRpc(!light.enabled); // Note I send through variables over the network. You can send multiple ones with commas, BUT you CAN’T send references to other objects as you normally would. There are other ways to do that though
         }
     }
 
