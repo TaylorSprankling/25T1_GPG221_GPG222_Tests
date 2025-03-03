@@ -206,11 +206,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6613623187777828081}
   - component: {fileID: 4175351951792551745}
-  - component: {fileID: -3758232559308978304}
   - component: {fileID: -6136414009412837622}
   - component: {fileID: 8321592815811780913}
   - component: {fileID: -7379100927286965907}
   - component: {fileID: 5858032941546129601}
+  - component: {fileID: -3758232559308978304}
   m_Layer: 0
   m_Name: NPCCustomPathAI
   m_TagString: Untagged
@@ -262,7 +262,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &-3758232559308978304
+--- !u!114 &-6136414009412837622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,25 +271,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 9173533330340461063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae8f0cc9235fe64ea3dd939cdb159d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  worldScanner: {fileID: 0}
---- !u!114 &-6136414009412837622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9173533330340461063}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8dc38b851e4d9dd41a869e07fb56107b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveForward: {fileID: 8321592815811780913}
   wander: {fileID: -7379100927286965907}
   avoid: {fileID: 5858032941546129601}
+  customPathFollower: {fileID: -3758232559308978304}
+  stopOnTargetReached: 1
 --- !u!114 &8321592815811780913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,3 +326,17 @@ MonoBehaviour:
   fieldOfView: 90
   turnSpeed: 3
   ignoreWalls: 0
+--- !u!114 &-3758232559308978304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173533330340461063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae8f0cc9235fe64ea3dd939cdb159d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldScanner: {fileID: 0}
+  target: {fileID: 0}

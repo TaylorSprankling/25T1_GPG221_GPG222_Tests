@@ -42,8 +42,7 @@ public class WorldScanner : MonoBehaviour
                 {
                     GridPositionX = x,
                     GridPositionZ = z,
-                    WorldPosition = new Vector3(transform.position.x + x * pixelSize + pixelSize * 0.5f,
-                                                transform.position.y,
+                    WorldPosition = new Vector2(transform.position.x + x * pixelSize + pixelSize * 0.5f,
                                                 transform.position.z + z * pixelSize + pixelSize * 0.5f)
                 };
 
@@ -105,12 +104,12 @@ public class WorldScanner : MonoBehaviour
 
 public class Node
 {
-    public Vector3 WorldPosition;
+    public Node Parent;
+    public Vector2 WorldPosition;
     public int GridPositionX;
     public int GridPositionZ;
+    [Tooltip("gCost + hCost")] public int FCost;
+    [Tooltip("Distance from parent")] public int GCost;
+    [Tooltip("Distance to target")] public int HCost = -1;
     public bool IsBlocked;
-    public float FCost;
-    public float GCost;
-    public float HCost;
-    public Node Parent;
 }

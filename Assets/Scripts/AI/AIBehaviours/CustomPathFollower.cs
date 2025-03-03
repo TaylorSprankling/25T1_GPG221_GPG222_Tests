@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,10 +33,19 @@ public class CustomPathFollower : MonoBehaviour
         int targetGridPosX = Mathf.RoundToInt(targetGridPosition.x);
         int targetGridPosZ = Mathf.RoundToInt(targetGridPosition.z);
         targetNode = worldScanner.GridNodeReferences[targetGridPosX, targetGridPosZ];
-        
         while (open.Count > 0)
         {
             Node currentNode = open[Random.Range(0, open.Count)];
+            for (int i = 0; i < open.Count; i++)
+            {
+                if (open[i].FCost < currentNode.FCost)
+                {
+                    currentNode = open[i];
+                }
+            }
+            open.Remove(currentNode);
+            closed.Add(currentNode);
+            if (currentNode == targetNode) break;
             for (int xOffset = -1; xOffset < 2; xOffset++)
             {
                 for (int zOffset = -1; zOffset < 2; zOffset++)
@@ -46,50 +56,61 @@ public class CustomPathFollower : MonoBehaviour
                     {
                         continue;
                     }
-
+                    
                     Node currentNeighbour = worldScanner.GridNodeReferences[currentNode.GridPositionX + xOffset, currentNode.GridPositionZ + zOffset];
                     if (currentNeighbour.IsBlocked || closed.Contains(currentNeighbour)) continue;
-                    currentNeighbour.HCost = (currentNeighbour.WorldPosition - targetNode.WorldPosition).magnitude;
-                    currentNeighbour.Parent ??= currentNode;
-                    currentNeighbour.GCost = currentNeighbour.Parent.GCost + (currentNeighbour.WorldPosition - currentNeighbour.Parent.WorldPosition).magnitude;
-                    if (currentNeighbour.FCost == 0f || currentNeighbour.HCost + currentNeighbour.GCost < currentNeighbour.FCost)
+                    if (currentNeighbour.HCost == -1)
                     {
-                        currentNeighbour.FCost = currentNeighbour.HCost + currentNeighbour.GCost;
-                        currentNeighbour.Parent = currentNode;
+                        currentNeighbour.HCost = Mathf.RoundToInt(Vector2.Distance(currentNeighbour.WorldPosition, targetNode.WorldPosition) * 1000);
                     }
-                    open.Add(currentNeighbour);
-                    if (currentNeighbour == targetNode) goto pathRetrace;
+                    int gCostCalc = currentNode.GCost + Mathf.RoundToInt(Vector2.Distance(currentNeighbour.WorldPosition, currentNode.WorldPosition) * 1000);
+                    if (currentNeighbour.Parent == null)
+                    {
+                        currentNeighbour.Parent = currentNode;
+                        currentNeighbour.GCost = gCostCalc;
+                        currentNeighbour.FCost = currentNeighbour.HCost + gCostCalc;
+                    }
+                    else if (currentNeighbour.HCost + gCostCalc < currentNeighbour.FCost)
+                    {
+                        currentNeighbour.Parent = currentNode;
+                        currentNeighbour.GCost = gCostCalc;
+                        currentNeighbour.FCost = currentNeighbour.HCost + gCostCalc;
+                    }
+                    if (!open.Contains(currentNeighbour))
+                    {
+                        open.Add(currentNeighbour);
+                    }
                 }
             }
-
-            open.Remove(currentNode);
-            closed.Add(currentNode);
         }
-        pathRetrace:
+        
         finalPath.Add(targetNode);
         while (!finalPath.Contains(startNode))
         {
             finalPath.Add(finalPath[^1].Parent);
         }
+
         finalPath.Reverse();
     }
     
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        for (int x = 0; x < worldScanner.scanResolution.x; x++)
+        Gizmos.color = Color.green;
+        foreach (Node n in open)
         {
-            for (int z = 0; z < worldScanner.scanResolution.z; z++)
-            {
-                if (finalPath.Contains(worldScanner.GridNodeReferences[x, z])) // REALLY slow, but hey
-                {
-                    Gizmos.color = Color.blue;
-                    Gizmos.DrawCube(new Vector3(x * worldScanner.pixelSize + worldScanner.pixelSize * 0.5f, 
-                                                0, 
-                                                z * worldScanner.pixelSize + worldScanner.pixelSize * 0.5f)  + worldScanner.transform.position, 
-                                    Vector3.one * worldScanner.pixelSize);
-                }
-            }
+            Gizmos.DrawCube(new Vector3(n.WorldPosition.x, 0, n.WorldPosition.y), new Vector3(worldScanner.pixelSize, 0.002f, worldScanner.pixelSize));
+        }
+        
+        Gizmos.color = new Color(1f, 0f, 0f, 1f);
+        foreach (Node n in closed)
+        {
+            Gizmos.DrawCube(new Vector3(n.WorldPosition.x, 0, n.WorldPosition.y), new Vector3(worldScanner.pixelSize, 0.002f, worldScanner.pixelSize));
+        }
+        
+        Gizmos.color = Color.blue;
+        foreach (Node n in finalPath)
+        {
+            Gizmos.DrawCube(new Vector3(n.WorldPosition.x, 0, n.WorldPosition.y), new Vector3(worldScanner.pixelSize, 0.002f, worldScanner.pixelSize));
         }
     }
-
 }
