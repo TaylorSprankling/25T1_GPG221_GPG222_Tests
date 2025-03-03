@@ -12,7 +12,7 @@ public class Wander : MonoBehaviour
 
     private void TurnAround()
     {
-        var perlinNoise = Mathf.PerlinNoise1D(Time.time);
+        float perlinNoise = Mathf.PerlinNoise1D(Time.time);
         perlinNoise += Random.Range(-randomAmount, randomAmount);
         rb.AddRelativeTorque(0, perlinNoise, 0);
     }

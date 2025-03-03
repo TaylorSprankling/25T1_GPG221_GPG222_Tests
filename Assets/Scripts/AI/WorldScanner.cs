@@ -1,71 +1,102 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class WorldScanner : MonoBehaviour
 {
-    private Node[,] gridNodeReferences;
-    [SerializeField] private Vector3 worldScanSize;
-    [SerializeField] private float pixelSize = 1f;
+    [SerializeField] public Vector3 worldScanSize;
+    [SerializeField] public float pixelSize = 1f;
     [SerializeField] private LayerMask detectedLayers;
-    [SerializeField] private KeyCode scanKeyDebug;
-    private Vector3 scanResolution;
+
+    public Node[,] GridNodeReferences;
+    private Vector3 scannedPosition;
+    private Vector3 scannedSize;
+    public Vector3 scanResolution;
+
+    [Header("Debug Options")]
+    [SerializeField] private bool showScanArea;
+    [SerializeField] private bool showObstacles;
+    [SerializeField] private bool showFreeSpace;
     
     private void Awake()
     {
         ScanWorld();
     }
 
-#if (UNITY_EDITOR)
-    private void Update()
+    public void ScanWorld()
     {
-        if (Input.GetKeyDown(scanKeyDebug))
+        if (worldScanSize.x % pixelSize != 0 || worldScanSize.z % pixelSize != 0)
         {
-            ScanWorld();
+            #if UNITYEDITOR
+            Debug.LogError("World scan size not divisible by pixel size");
+            #endif
+            return;
         }
-    }
-#endif
 
-    private void ScanWorld()
-    {
         scanResolution = worldScanSize / pixelSize;
-        gridNodeReferences = new Node[(int)(scanResolution.x), (int)(scanResolution.z)];
+        GridNodeReferences = new Node[(int)scanResolution.x, (int)scanResolution.z];
+
         for (int x = 0; x < scanResolution.x; x++)
         {
             for (int z = 0; z < scanResolution.z; z++)
             {
-                gridNodeReferences[x, z] = new Node();
-
-                if (Physics.CheckBox(new Vector3(
-                            transform.position.x - (worldScanSize.x * 0.5f) + (x * pixelSize) + (pixelSize * 0.5f), 
-                            transform.position.y, 
-                            transform.position.z - (worldScanSize.z * 0.5f) + (z * pixelSize) + (pixelSize * 0.5f)), 
-                        Vector3.one * (pixelSize * 0.5f), Quaternion.identity, detectedLayers))
+                GridNodeReferences[x, z] = new Node
                 {
-                    gridNodeReferences[x, z].IsBlocked = true;
+                    GridPositionX = x,
+                    GridPositionZ = z,
+                    WorldPosition = new Vector3(transform.position.x + x * pixelSize + pixelSize * 0.5f,
+                                                transform.position.y,
+                                                transform.position.z + z * pixelSize + pixelSize * 0.5f)
+                };
+
+                if (Physics.CheckBox(new Vector3(transform.position.x + x * pixelSize + pixelSize * 0.5f,
+                                                 transform.position.y,
+                                                 transform.position.z + z * pixelSize + pixelSize * 0.5f),
+                                     Vector3.one * (pixelSize * 0.5f), Quaternion.identity, detectedLayers))
+                {
+                    GridNodeReferences[x, z].IsBlocked = true;
                 }
             }
         }
+
+        scannedPosition = transform.position;
+        scannedSize = worldScanSize;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        if (gridNodeReferences == null)
+        if (GridNodeReferences == null || transform.position != scannedPosition || worldScanSize != scannedSize)
         {
+            if (!showScanArea) return;
+            Gizmos.color = new Color(1, 0.5f, 0);
+            Gizmos.DrawCube(transform.position + worldScanSize * 0.5f, new Vector3(worldScanSize.x, worldScanSize.y + 0.001f, worldScanSize.z));
             return;
         }
+
+        if (showScanArea)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawCube(transform.position + worldScanSize * 0.5f, new Vector3(worldScanSize.x, worldScanSize.y + 0.001f, worldScanSize.z));
+        }
+
         for (int x = 0; x < scanResolution.x; x++)
         {
             for (int z = 0; z < scanResolution.z; z++)
             {
-                if (gridNodeReferences[x, z].IsBlocked)
+                switch (GridNodeReferences[x, z].IsBlocked)
                 {
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawCube(new Vector3(
-                            transform.position.x - (worldScanSize.x * 0.5f) + (x * pixelSize) + (pixelSize * 0.5f), 
-                            transform.position.y, 
-                            transform.position.z - (worldScanSize.z * 0.5f) + (z * pixelSize) + (pixelSize * 0.5f)), 
-                        Vector3.one * pixelSize);
+                    case false when showFreeSpace:
+                        Gizmos.color = Color.cyan;
+                        Gizmos.DrawCube(new Vector3(transform.position.x + x * pixelSize + pixelSize * 0.5f,
+                                                    transform.position.y,
+                                                    transform.position.z + z * pixelSize + pixelSize * 0.5f),
+                                        new Vector3(pixelSize, 0.001f, pixelSize));
+                        break;
+                    case true when showObstacles:
+                        Gizmos.color = Color.red;
+                        Gizmos.DrawCube(new Vector3(transform.position.x + x * pixelSize + pixelSize * 0.5f,
+                                                    transform.position.y,
+                                                    transform.position.z + z * pixelSize + pixelSize * 0.5f),
+                                        new Vector3(pixelSize, 0.001f, pixelSize));
+                        break;
                 }
             }
         }
@@ -74,8 +105,12 @@ public class WorldScanner : MonoBehaviour
 
 public class Node
 {
+    public Vector3 WorldPosition;
+    public int GridPositionX;
+    public int GridPositionZ;
     public bool IsBlocked;
+    public float FCost;
     public float GCost;
     public float HCost;
-    public float FCost;
+    public Node Parent;
 }
