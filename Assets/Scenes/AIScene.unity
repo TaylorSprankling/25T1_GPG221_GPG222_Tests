@@ -1546,7 +1546,6 @@ MonoBehaviour:
   detectedLayers:
     serializedVersion: 2
     m_Bits: 64
-  scanResolution: {x: 0, y: 0, z: 0}
   showScanArea: 1
   showObstacles: 1
   showFreeSpace: 0
@@ -2548,9 +2547,9 @@ Transform:
   m_GameObject: {fileID: 1742281036}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 3, y: 2, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 719181730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2967,7 +2966,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Spawn Dudes
+  m_text: Spawn Dude
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3210,7 +3209,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPCNavMeshAI
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8029196096185555737, guid: 7e9a0929cd0e1534c9e68db5b869d5cb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3278,14 +3278,6 @@ PrefabInstance:
     - target: {fileID: 6401646683932042151, guid: d2a05b118b229744e997b9f6a42a7dfc, type: 3}
       propertyPath: spawnArea.z
       value: 37
-      objectReference: {fileID: 0}
-    - target: {fileID: 6401646683932042151, guid: d2a05b118b229744e997b9f6a42a7dfc, type: 3}
-      propertyPath: spawnOnStart
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6401646683932042151, guid: d2a05b118b229744e997b9f6a42a7dfc, type: 3}
-      propertyPath: startSpawnAmount
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -9,12 +9,13 @@ public class WorldScanner : MonoBehaviour
     public Node[,] GridNodeReferences;
     private Vector3 scannedPosition;
     private Vector3 scannedSize;
-    public Vector3 scanResolution;
 
     [Header("Debug Options")]
     [SerializeField] private bool showScanArea;
     [SerializeField] private bool showObstacles;
     [SerializeField] private bool showFreeSpace;
+    
+    public Vector3 ScanResolution {get; private set;}
     
     private void Awake()
     {
@@ -31,12 +32,12 @@ public class WorldScanner : MonoBehaviour
             return;
         }
 
-        scanResolution = worldScanSize / pixelSize;
-        GridNodeReferences = new Node[(int)scanResolution.x, (int)scanResolution.z];
+        ScanResolution = worldScanSize / pixelSize;
+        GridNodeReferences = new Node[(int)ScanResolution.x, (int)ScanResolution.z];
 
-        for (int x = 0; x < scanResolution.x; x++)
+        for (int x = 0; x < ScanResolution.x; x++)
         {
-            for (int z = 0; z < scanResolution.z; z++)
+            for (int z = 0; z < ScanResolution.z; z++)
             {
                 GridNodeReferences[x, z] = new Node
                 {
@@ -76,9 +77,9 @@ public class WorldScanner : MonoBehaviour
             Gizmos.DrawCube(transform.position + worldScanSize * 0.5f, new Vector3(worldScanSize.x, worldScanSize.y + 0.001f, worldScanSize.z));
         }
 
-        for (int x = 0; x < scanResolution.x; x++)
+        for (int x = 0; x < ScanResolution.x; x++)
         {
-            for (int z = 0; z < scanResolution.z; z++)
+            for (int z = 0; z < ScanResolution.z; z++)
             {
                 switch (GridNodeReferences[x, z].IsBlocked)
                 {

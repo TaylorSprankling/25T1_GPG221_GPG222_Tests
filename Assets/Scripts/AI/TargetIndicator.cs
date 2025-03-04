@@ -9,13 +9,13 @@ public class TargetIndicator : MonoBehaviour
     private void OnEnable()
     {
         MouseTarget.LeftClickNewTargetPosition += MoveTargetIndicator;
-        navMeshPathCalculator.TargetReached += DisableTargetIndicator;
+        // navMeshPathCalculator.TargetReached += DisableTargetIndicator;
     }
 
     private void OnDisable()
     {
         MouseTarget.LeftClickNewTargetPosition -= MoveTargetIndicator;
-        navMeshPathCalculator.TargetReached -= DisableTargetIndicator;
+        // navMeshPathCalculator.TargetReached -= DisableTargetIndicator;
     }
 
     private void MoveTargetIndicator(Vector3 targetPosition)

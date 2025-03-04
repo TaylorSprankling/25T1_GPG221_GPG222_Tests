@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7578805618719279475}
   - component: {fileID: 8386058544792794121}
   - component: {fileID: 3977364723403952992}
-  - component: {fileID: 7361200003298831382}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -87,29 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7361200003298831382
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3495399912611733725}
-  m_Material: {fileID: 13400000, guid: 6a4703117d0775143938d6d31b920e83, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6256752325355218603
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6613623187777828081}
   - component: {fileID: 4175351951792551745}
-  - component: {fileID: 6694260277642009935}
+  - component: {fileID: 2378087902505839677}
   - component: {fileID: 8321592815811780913}
   - component: {fileID: -7379100927286965907}
   - component: {fileID: 5858032941546129601}
@@ -261,21 +237,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &6694260277642009935
-MonoBehaviour:
+--- !u!136 &2378087902505839677
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9173533330340461063}
+  m_Material: {fileID: 13400000, guid: 6a4703117d0775143938d6d31b920e83, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df5b2dea43cf96549a48db4a15c93e21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveForward: {fileID: 8321592815811780913}
-  wander: {fileID: -7379100927286965907}
-  avoid: {fileID: 5858032941546129601}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &8321592815811780913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,7 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4175351951792551745}
-  randomAmount: 5
+  randomAmount: 1
 --- !u!114 &5858032941546129601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4175351951792551745}
   maxDistance: 3
-  feelersPerSide: 2
+  feelersPerSide: 1
   fieldOfView: 90
   turnSpeed: 3
   ignoreWalls: 0

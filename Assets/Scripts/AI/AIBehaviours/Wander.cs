@@ -3,7 +3,7 @@ using UnityEngine;
 public class Wander : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private float randomAmount = 5f;
+    [SerializeField] private float randomAmount = 1f;
 
     private void FixedUpdate()
     {

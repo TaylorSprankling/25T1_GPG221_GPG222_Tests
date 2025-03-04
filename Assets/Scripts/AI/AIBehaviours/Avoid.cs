@@ -7,10 +7,10 @@ public class Avoid : MonoBehaviour
     [SerializeField] private int feelersPerSide = 2;
     [SerializeField] private float fieldOfView = 90f;
     [SerializeField] private float turnSpeed = 3f;
-    [SerializeField] private bool ignoreWalls = false;
+    [SerializeField] private bool ignoreWalls;
 
     private float wallAngle;
-    private bool leavingDeadEnd = false;
+    private bool leavingDeadEnd;
 
     public bool IgnoreWalls { get => ignoreWalls; set => ignoreWalls = value; }
 
@@ -64,7 +64,7 @@ public class Avoid : MonoBehaviour
 
             switch (rightRayHit)
             {
-                case true when IgnoreWalls && rightHit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"):
+                case true when IgnoreWalls && rightHit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"): // Need to do something to ignore STATIC walls when attempting to follow path
                     break;
                 case true:
                     rb.AddRelativeTorque(0, -turnSpeed / feelersPerSide * ((maxDistance - rightHit.distance) / maxDistance), 0);

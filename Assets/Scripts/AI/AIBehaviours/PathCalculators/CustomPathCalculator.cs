@@ -1,19 +1,20 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class CustomPathCalculator : MonoBehaviour
+public class CustomPathCalculator : MonoBehaviour, IPathingCalculator
 {
     [SerializeField] private WorldScanner worldScanner;
     private List<Node> open;
     private List<Node> closed;
     private List<Node> finalPath;
-    
-    public List<Node> FinalPath => finalPath;
 
-    public event Action NewPathCalculated;
+    public event Action<Vector3[]> NewPathCalculated;
+
+    private void Awake()
+    {
+        worldScanner ??= FindFirstObjectByType<WorldScanner>();
+    }
 
     private void OnEnable()
     {
@@ -52,8 +53,8 @@ public class CustomPathCalculator : MonoBehaviour
         open.Add(startNode); // Starting node
         while (open.Count > 0)
         {
-            Node currentNode = open[Random.Range(0, open.Count)];
-            for (int i = 0; i < open.Count; i++)
+            Node currentNode = open[0];
+            for (int i = 1; i < open.Count; i++)
             {
                 if (open[i].FCost < currentNode.FCost)
                 {
@@ -68,8 +69,8 @@ public class CustomPathCalculator : MonoBehaviour
                 for (int zOffset = -1; zOffset < 2; zOffset++)
                 {
                     if (xOffset == 0 && zOffset == 0) continue;
-                    if (currentNode.GridPositionX + xOffset < 0 || currentNode.GridPositionX + xOffset >= worldScanner.scanResolution.x ||
-                        currentNode.GridPositionZ + zOffset < 0 || currentNode.GridPositionZ + zOffset >= worldScanner.scanResolution.z)
+                    if (currentNode.GridPositionX + xOffset < 0 || currentNode.GridPositionX + xOffset >= worldScanner.ScanResolution.x ||
+                        currentNode.GridPositionZ + zOffset < 0 || currentNode.GridPositionZ + zOffset >= worldScanner.ScanResolution.z)
                     {
                         continue;
                     }
@@ -100,7 +101,7 @@ public class CustomPathCalculator : MonoBehaviour
                 }
             }
         }
-        
+
         finalPath.Add(targetNode);
         while (!finalPath.Contains(startNode))
         {
@@ -108,37 +109,43 @@ public class CustomPathCalculator : MonoBehaviour
         }
 
         finalPath.Reverse();
-        NewPathCalculated?.Invoke();
 
         foreach (Node n in open)
         {
             n.Reset();
         }
+
         foreach (Node n in closed)
         {
             n.Reset();
         }
-    }
 
-    private void OnDrawGizmos()
-    {
-        if (finalPath == null) return;
-        Gizmos.color = Color.blue;
-        foreach (Node n in finalPath)
+        Vector3[] waypoints = new Vector3[finalPath.Count];
+        for (int index = 0; index < finalPath.Count; index++)
         {
-            Gizmos.DrawCube(new Vector3(n.WorldPosition.x, 0, n.WorldPosition.y), new Vector3(worldScanner.pixelSize, 0.002f, worldScanner.pixelSize));
+            Node n = finalPath[index];
+            waypoints[index] = new Vector3(n.WorldPosition.x, 0, n.WorldPosition.y);
         }
+
+        NewPathCalculated?.Invoke(waypoints);
     }
 
     private void OnDrawGizmosSelected()
     {
         if (finalPath == null) return;
+
+        Gizmos.color = Color.blue;
+        foreach (Node n in finalPath)
+        {
+            Gizmos.DrawCube(new Vector3(n.WorldPosition.x, 0, n.WorldPosition.y), new Vector3(worldScanner.pixelSize, 0.002f, worldScanner.pixelSize));
+        }
+
         Gizmos.color = Color.green;
         foreach (Node n in open)
         {
             Gizmos.DrawCube(new Vector3(n.WorldPosition.x, 0, n.WorldPosition.y), new Vector3(worldScanner.pixelSize, 0.002f, worldScanner.pixelSize));
         }
-        
+
         Gizmos.color = new Color(1f, 0f, 0f, 1f);
         foreach (Node n in closed)
         {
