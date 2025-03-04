@@ -112,4 +112,12 @@ public class Node
     [Tooltip("Distance from parent")] public int GCost;
     [Tooltip("Distance to target")] public int HCost = -1;
     public bool IsBlocked;
+
+    public void Reset()
+    {
+    Parent = null;
+    FCost = 0;
+    GCost = 0;
+    HCost = -1;
+    }
 }

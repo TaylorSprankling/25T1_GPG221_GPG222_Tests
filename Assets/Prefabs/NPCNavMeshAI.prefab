@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 8975807634022064588}
   - component: {fileID: 5982827051936084464}
   m_Layer: 0
-  m_Name: PlayerNavMeshAI
+  m_Name: NPCNavMeshAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,7 +277,7 @@ MonoBehaviour:
   moveForward: {fileID: 6575735391488182888}
   wander: {fileID: 4629917295098135629}
   avoid: {fileID: 8975807634022064588}
-  navMeshPathFollower: {fileID: 5982827051936084464}
+  navMeshPathCalculator: {fileID: 5982827051936084464}
   stopOnTargetReached: 1
 --- !u!114 &6575735391488182888
 MonoBehaviour:

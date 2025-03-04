@@ -277,7 +277,7 @@ MonoBehaviour:
   moveForward: {fileID: 8321592815811780913}
   wander: {fileID: -7379100927286965907}
   avoid: {fileID: 5858032941546129601}
-  customPathFollower: {fileID: -3758232559308978304}
+  customPathCalculator: {fileID: -3758232559308978304}
   stopOnTargetReached: 1
 --- !u!114 &8321592815811780913
 MonoBehaviour:
@@ -339,4 +339,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldScanner: {fileID: 0}
-  target: {fileID: 0}

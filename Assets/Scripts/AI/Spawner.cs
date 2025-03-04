@@ -1,24 +1,31 @@
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
-    [SerializeField] private int spawnAmount;
     [SerializeField] private Vector3 spawnArea;
-
+    [SerializeField] private bool spawnOnStart;
+    [SerializeField] private int startSpawnAmount;
+    
     private void Start()
     {
-        if (prefab != null)
-            Spawn();
+        if (prefab != null && spawnOnStart)
+            Spawn(startSpawnAmount);
     }
 
-    private void Spawn()
+    public void Spawn(int amountToSpawn)
     {
-        for (var i = 0; i < spawnAmount; i++)
+        for (int i = 0; i < amountToSpawn; i++)
             Instantiate(prefab,
-                transform.position + new Vector3(Random.Range(-spawnArea.x, spawnArea.x),
-                    Random.Range(-spawnArea.y, spawnArea.y), Random.Range(-spawnArea.z, spawnArea.z)),
+                transform.position - new Vector3(Random.Range(-spawnArea.x * 0.5f, spawnArea.x * 0.5f), 
+                                                 Random.Range(-spawnArea.y * 0.5f, spawnArea.y * 0.5f), 
+                                                 Random.Range(-spawnArea.z  * 0.5f, spawnArea.z * 0.5f)),
                 Quaternion.Euler(0, Random.Range(0, 360), 0));
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(transform.position, spawnArea);
     }
 }

@@ -1,20 +1,21 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BehaviourControllerNavMesh : BehaviourController
 {
-    [SerializeField] private NavMeshPathFollower navMeshPathFollower;
+    [SerializeField] private NavMeshPathCalculator navMeshPathCalculator;
     [SerializeField] private bool stopOnTargetReached = true;
 
     private void OnEnable()
     {
-        navMeshPathFollower.NewTargetSet += MoveTowardsTarget;
-        navMeshPathFollower.TargetReached += TargetReachedBehaviour;
+        navMeshPathCalculator.NewTargetSet += MoveTowardsTarget;
+        navMeshPathCalculator.TargetReached += TargetReachedBehaviour;
     }
 
     private void OnDisable()
     {
-        navMeshPathFollower.NewTargetSet -= MoveTowardsTarget;
-        navMeshPathFollower.TargetReached -= TargetReachedBehaviour;
+        navMeshPathCalculator.NewTargetSet -= MoveTowardsTarget;
+        navMeshPathCalculator.TargetReached -= TargetReachedBehaviour;
     }
 
     private void MoveTowardsTarget()

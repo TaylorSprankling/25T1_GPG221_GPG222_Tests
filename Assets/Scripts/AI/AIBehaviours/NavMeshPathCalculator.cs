@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NavMeshPathFollower : MonoBehaviour
+public class NavMeshPathCalculator : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float turnStrength = 10f;
@@ -25,17 +25,17 @@ public class NavMeshPathFollower : MonoBehaviour
 
     private void OnEnable()
     {
-        MouseTarget.NewTargetPosition += CalculatePath;
+        MouseTarget.LeftClickNewTargetPosition += CalculatePath;
     }
 
     private void OnDisable()
     {
-        MouseTarget.NewTargetPosition -= CalculatePath;
+        MouseTarget.LeftClickNewTargetPosition -= CalculatePath;
     }
 
     private void FixedUpdate()
     {
-        FollowPath();
+        FollowPath(); // Put this in align behaviour when made
     }
 
     private void CalculatePath(Vector3 target)
