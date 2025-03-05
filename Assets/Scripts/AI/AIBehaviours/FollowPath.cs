@@ -5,6 +5,8 @@ using UnityEngine;
 public class FollowPath : MonoBehaviour
 {
     [SerializeField] private TurnTowards turnTowards;
+    [SerializeField] private Wander wander;
+    [SerializeField] private Avoid avoid;
     [SerializeField] private float waypointReachedDistance = 1f;
     private IPathingCalculator pathingCalculator;
     private Vector3[] targetWaypoints;
@@ -14,6 +16,8 @@ public class FollowPath : MonoBehaviour
     
     private void Awake()
     {
+        wander ??= GetComponent<Wander>();
+        avoid ??= GetComponent<Avoid>();
         turnTowards ??= GetComponent<TurnTowards>();
         pathingCalculator ??= GetComponent<IPathingCalculator>();
     }
@@ -39,6 +43,15 @@ public class FollowPath : MonoBehaviour
         targetWaypoints = waypoints;
         turnTowards.TargetPosition = targetWaypoints[0];
         turnTowards.HasTarget = true;
+        if (avoid != null)
+        {
+            avoid.IgnoreWalls = true;
+        }
+
+        if (wander != null)
+        {
+            wander.enabled = false;
+        }
     }
 
     private void HandlePathFollow()
@@ -52,6 +65,16 @@ public class FollowPath : MonoBehaviour
             targetWaypoints = null;
             turnTowards.HasTarget = false;
             TargetReached?.Invoke();
+            if (avoid)
+            {
+                avoid.IgnoreWalls = false;
+            }
+
+            if (wander)
+            {
+                wander.enabled = true;
+            }
+
             return;
         }
         
@@ -62,7 +85,7 @@ public class FollowPath : MonoBehaviour
     
     private void OnDrawGizmos()
     {
-        if (targetWaypoints == null || targetWaypoints.Length == 0) return;
+        if (targetWaypoints == null || targetWaypoints.Length == 0 || !DebugToggles.DrawTargetRoutes) return;
         Gizmos.color = Color.green;
         for (int i = 0; i < targetWaypoints.Length - currentWaypointIndex; i++)
         {

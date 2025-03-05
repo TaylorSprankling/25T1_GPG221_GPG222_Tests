@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnTowards: {fileID: 3356485601448290019}
-  waypointReachedDistance: 1
+  waypointReachedDistance: 1.5
 --- !u!114 &5982827051936084464
 MonoBehaviour:
   m_ObjectHideFlags: 0

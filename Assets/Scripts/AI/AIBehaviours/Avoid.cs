@@ -32,11 +32,11 @@ public class Avoid : MonoBehaviour
         {
             Vector3 rightRayDirection = Quaternion.AngleAxis((fieldOfView * 0.5f) * (i / (float)feelersPerSide), transform.up) * transform.forward;
             bool rightRayHit = Physics.Raycast(rayOrigin, rightRayDirection, out RaycastHit rightHit, maxDistance);
-            Debug.DrawRay(rayOrigin, rightRayDirection * maxDistance, Color.red);
+            //Debug.DrawRay(rayOrigin, rightRayDirection * maxDistance, Color.red);
             
             Vector3 leftRayDirection = Quaternion.AngleAxis((-fieldOfView * 0.5f) * (i / (float)feelersPerSide), transform.up) * transform.forward;
             bool leftRayHit = Physics.Raycast(rayOrigin, leftRayDirection, out RaycastHit leftHit, maxDistance);
-            Debug.DrawRay(rayOrigin, leftRayDirection * maxDistance, Color.red);
+            //Debug.DrawRay(rayOrigin, leftRayDirection * maxDistance, Color.red);
 
             if (rightRayHit && leftRayHit)
             {
@@ -45,6 +45,11 @@ public class Avoid : MonoBehaviour
                     Physics.Raycast(rayOrigin, transform.forward, out RaycastHit hit, maxDistance);
                     wallAngle = Vector3.SignedAngle(transform.forward, -hit.normal, -Vector3.up);
                     leavingDeadEnd = true;
+                }
+                
+                if (DebugToggles.DrawRays)
+                {
+                    Debug.DrawRay(rayOrigin, transform.forward * maxDistance, Color.red);
                 }
 
                 switch (wallAngle)
@@ -64,19 +69,37 @@ public class Avoid : MonoBehaviour
 
             switch (rightRayHit)
             {
-                case true when IgnoreWalls && rightHit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"): // Need to do something to ignore STATIC walls when attempting to follow path
+                case false:
+                case true when IgnoreWalls && rightHit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"):
+                    if (DebugToggles.DrawRays)
+                    {
+                        Debug.DrawRay(rayOrigin, rightRayDirection * maxDistance, new Color(1f, 1f, 1f, .5f));
+                    }
                     break;
                 case true:
                     rb.AddRelativeTorque(0, -turnSpeed / feelersPerSide * ((maxDistance - rightHit.distance) / maxDistance), 0);
+                    if (DebugToggles.DrawRays)
+                    {
+                        Debug.DrawRay(rayOrigin, rightRayDirection * maxDistance, Color.red);
+                    }
                     break;
             }
 
             switch (leftRayHit)
             {
+                case false:
                 case true when IgnoreWalls && leftHit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"):
+                    if (DebugToggles.DrawRays)
+                    {
+                        Debug.DrawRay(rayOrigin, leftRayDirection * maxDistance, new Color(1f, 1f, 1f, .5f));
+                    }
                     break;
                 case true:
                     rb.AddRelativeTorque(0, turnSpeed / feelersPerSide * ((maxDistance - rightHit.distance) / maxDistance), 0);
+                    if (DebugToggles.DrawRays)
+                    {
+                        Debug.DrawRay(rayOrigin, leftRayDirection * maxDistance, Color.red);
+                    }
                     break;
             }
         }

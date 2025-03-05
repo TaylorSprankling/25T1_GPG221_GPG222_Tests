@@ -3,29 +3,46 @@ using UnityEngine.Serialization;
 
 public class TargetIndicator : MonoBehaviour
 {
-    [SerializeField] private GameObject visuals;
-    [SerializeField] private NavMeshPathCalculator navMeshPathCalculator;
+    [SerializeField] private GameObject navMeshVisual;
+    [SerializeField] private GameObject customPathVisual;
+    [SerializeField] private FollowPath navMeshFollowPath;
+    [SerializeField] private FollowPath customFollowPath;
 
     private void OnEnable()
     {
-        MouseTarget.LeftClickNewTargetPosition += MoveTargetIndicator;
-        // navMeshPathCalculator.TargetReached += DisableTargetIndicator;
+        MouseTarget.LeftClickNewTargetPosition += MoveNavMashTargetIndicator;
+        MouseTarget.RightClickNewTargetPosition += MoveCustomTargetIndicator;
+        navMeshFollowPath.TargetReached += DisableNavMeshTargetIndicator;
+        customFollowPath.TargetReached += DisableCustomTargetIndicator;
     }
 
     private void OnDisable()
     {
-        MouseTarget.LeftClickNewTargetPosition -= MoveTargetIndicator;
-        // navMeshPathCalculator.TargetReached -= DisableTargetIndicator;
+        MouseTarget.LeftClickNewTargetPosition -= MoveNavMashTargetIndicator;
+        MouseTarget.RightClickNewTargetPosition -= MoveCustomTargetIndicator;
+        navMeshFollowPath.TargetReached -= DisableNavMeshTargetIndicator;
+        customFollowPath.TargetReached -= DisableCustomTargetIndicator;
     }
 
-    private void MoveTargetIndicator(Vector3 targetPosition)
+    private void MoveNavMashTargetIndicator(Vector3 targetPosition)
     {
-        transform.position = targetPosition;
-        visuals.SetActive(true);
+        navMeshVisual.transform.position = targetPosition;
+        navMeshVisual.SetActive(true);
     }
 
-    private void DisableTargetIndicator()
+    private void DisableNavMeshTargetIndicator()
     {
-        visuals.SetActive(false);
+        navMeshVisual.SetActive(false);
+    }
+
+    private void MoveCustomTargetIndicator(Vector3 targetPosition)
+    {
+        customPathVisual.transform.position = targetPosition;
+        customPathVisual.SetActive(true);
+    }
+    
+    private void DisableCustomTargetIndicator()
+    {
+        customPathVisual.SetActive(false);
     }
 }

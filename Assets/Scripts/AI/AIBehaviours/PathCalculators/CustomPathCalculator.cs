@@ -130,9 +130,9 @@ public class CustomPathCalculator : MonoBehaviour, IPathingCalculator
         NewPathCalculated?.Invoke(waypoints);
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-        if (finalPath == null) return;
+        if (finalPath == null || !DebugToggles.DrawCalculatedPaths) return;
 
         Gizmos.color = Color.blue;
         foreach (Node n in finalPath)

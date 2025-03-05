@@ -45,9 +45,9 @@ public class NavMeshPathCalculator : MonoBehaviour, IPathingCalculator
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-        if (path == null) return;
+        if (path == null || !DebugToggles.DrawCalculatedPaths) return;
         Gizmos.color = Color.blue;
         for (int i = 1; i < path.corners.Length; i++)
         {
