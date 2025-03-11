@@ -4,13 +4,13 @@ public class TurnTowards : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float turnStrength = 5f;
-    
+
     public bool HasTarget { get; set; }
     public Vector3 TargetPosition { get; set; }
-    
+
     private void Awake()
     {
-        rb ??= GetComponent<Rigidbody>();
+        if (rb == null) rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()

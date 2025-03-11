@@ -189,7 +189,9 @@ GameObject:
   - component: {fileID: 3356485601448290019}
   - component: {fileID: -2030908145460537618}
   - component: {fileID: 5982827051936084464}
-  m_Layer: 0
+  - component: {fileID: -8274063655008455373}
+  - component: {fileID: 5366635891017463891}
+  m_Layer: 9
   m_Name: NPCNavMeshAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,6 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3160850685518985753}
   maxDistance: 3
+  deadEndCheckDistance: 5
   feelersPerSide: 2
   fieldOfView: 90
   turnSpeed: 3
@@ -337,7 +340,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnTowards: {fileID: 3356485601448290019}
-  waypointReachedDistance: 1.5
+  wander: {fileID: 4629917295098135629}
+  avoid: {fileID: 8975807634022064588}
+  waypointReachedDistance: 1
 --- !u!114 &5982827051936084464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,3 +355,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17506ee0b0d76b44aa9b93c3b5b1e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8274063655008455373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136381326266311458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f08ae00fd801bdf4ab13acfeacd638f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  neighbourRadius: 3
+  neighboursList: []
+  neighboursInLos: []
+--- !u!114 &5366635891017463891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136381326266311458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2acfa52d555450f4d8ff4ec753e2f5e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidBody: {fileID: 3160850685518985753}
+  neighbours: {fileID: -8274063655008455373}
+  separateStrength: 1

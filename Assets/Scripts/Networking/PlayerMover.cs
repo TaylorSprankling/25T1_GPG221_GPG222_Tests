@@ -1,4 +1,3 @@
-using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ public class PlayerMover : NetworkBehaviour
         // Local only. Not networked
         if (IsLocalPlayer)
         {
-            if(Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 MoveThePlayer_RequestToServer_Rpc(KeyCode.W);
             }
@@ -27,7 +26,7 @@ public class PlayerMover : NetworkBehaviour
     }
 
 
-// Function that ONLY runs on the server. Typically for client controller code when they press buttons etc
+    // Function that ONLY runs on the server. Typically for client controller code when they press buttons etc
     [Rpc(SendTo.Server, RequireOwnership = false)]
     private void MoveThePlayer_RequestToServer_Rpc(KeyCode keyCode)
     {
@@ -36,12 +35,11 @@ public class PlayerMover : NetworkBehaviour
     }
 
 
-// Function that runs from the Server TO ALL clients
+    // Function that runs from the Server TO ALL clients
     [Rpc(SendTo.ClientsAndHost, RequireOwnership = false)]
     private void MoveThePlayer_ServerToClients_Rpc(KeyCode keyCode)
     {
         // This is bugged
         rb.AddForce(0, 0, 100);
     }
-
 }

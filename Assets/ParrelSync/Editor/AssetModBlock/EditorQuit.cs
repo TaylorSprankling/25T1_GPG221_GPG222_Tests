@@ -1,14 +1,16 @@
 ﻿using UnityEditor;
+
 namespace ParrelSync
 {
     [InitializeOnLoad]
     public class EditorQuit
     {
         /// <summary>
-        /// Is editor being closed
+        ///     Is editor being closed
         /// </summary>
-        static public bool IsQuiting { get; private set; }
-        static void Quit()
+        public static bool IsQuiting { get; private set; }
+
+        private static void Quit()
         {
             IsQuiting = true;
         }

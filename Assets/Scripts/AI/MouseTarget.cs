@@ -19,6 +19,7 @@ public class MouseTarget : MonoBehaviour
                 LeftClickNewTargetPosition?.Invoke(TargetWorldPosition);
             }
         }
+
         if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(TurnTowards), typeof(MoveForward))]
 public class FollowPath : MonoBehaviour
 {
     [SerializeField] private TurnTowards turnTowards;
@@ -10,16 +9,17 @@ public class FollowPath : MonoBehaviour
     [SerializeField] private float waypointReachedDistance = 1f;
     private IPathingCalculator pathingCalculator;
     private Vector3[] targetWaypoints;
-    private int currentWaypointIndex = 0;
-    
+    private int currentWaypointIndex;
+
     public event Action TargetReached;
-    
+
     private void Awake()
     {
-        wander ??= GetComponent<Wander>();
-        avoid ??= GetComponent<Avoid>();
-        turnTowards ??= GetComponent<TurnTowards>();
-        pathingCalculator ??= GetComponent<IPathingCalculator>();
+        if (wander == null) wander = GetComponent<Wander>();
+        if (avoid == null) avoid = GetComponent<Avoid>();
+        if (turnTowards == null) turnTowards = GetComponent<TurnTowards>();
+        if (pathingCalculator == null) pathingCalculator = GetComponent<IPathingCalculator>();
+        if (pathingCalculator == null) Debug.LogError("pathingCalculator is null");
     }
 
     private void OnEnable()
@@ -43,6 +43,7 @@ public class FollowPath : MonoBehaviour
         targetWaypoints = waypoints;
         turnTowards.TargetPosition = targetWaypoints[0];
         turnTowards.HasTarget = true;
+
         if (avoid != null)
         {
             avoid.IgnoreWalls = true;
@@ -59,12 +60,13 @@ public class FollowPath : MonoBehaviour
         if (targetWaypoints == null || targetWaypoints.Length == 0) return;
 
         if (!(Vector3.Distance(transform.position, targetWaypoints[currentWaypointIndex]) <= waypointReachedDistance)) return;
-        
+
         if (currentWaypointIndex >= targetWaypoints.Length - 1)
         {
             targetWaypoints = null;
             turnTowards.HasTarget = false;
             TargetReached?.Invoke();
+
             if (avoid)
             {
                 avoid.IgnoreWalls = false;
@@ -77,16 +79,16 @@ public class FollowPath : MonoBehaviour
 
             return;
         }
-        
+
         currentWaypointIndex++;
         turnTowards.TargetPosition = targetWaypoints[currentWaypointIndex];
-
     }
-    
+
     private void OnDrawGizmos()
     {
         if (targetWaypoints == null || targetWaypoints.Length == 0 || !DebugToggles.DrawTargetRoutes) return;
         Gizmos.color = Color.green;
+
         for (int i = 0; i < targetWaypoints.Length - currentWaypointIndex; i++)
         {
             if (i == 0)

@@ -189,7 +189,9 @@ GameObject:
   - component: {fileID: 5786641836575905575}
   - component: {fileID: -2790236608304644555}
   - component: {fileID: -3758232559308978304}
-  m_Layer: 0
+  - component: {fileID: -1909845493033607514}
+  - component: {fileID: -5216289590204505418}
+  m_Layer: 9
   m_Name: NPCCustomPathAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,6 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4175351951792551745}
   maxDistance: 3
+  deadEndCheckDistance: 5
   feelersPerSide: 2
   fieldOfView: 90
   turnSpeed: 3
@@ -337,6 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnTowards: {fileID: 5786641836575905575}
+  wander: {fileID: -7379100927286965907}
+  avoid: {fileID: 5858032941546129601}
   waypointReachedDistance: 2
 --- !u!114 &-3758232559308978304
 MonoBehaviour:
@@ -351,3 +356,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldScanner: {fileID: 0}
+--- !u!114 &-1909845493033607514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173533330340461063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f08ae00fd801bdf4ab13acfeacd638f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  neighbourRadius: 3
+  neighboursList: []
+  neighboursInLos: []
+--- !u!114 &-5216289590204505418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173533330340461063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2acfa52d555450f4d8ff4ec753e2f5e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidBody: {fileID: 4175351951792551745}
+  neighbours: {fileID: -1909845493033607514}
+  separateStrength: 1
