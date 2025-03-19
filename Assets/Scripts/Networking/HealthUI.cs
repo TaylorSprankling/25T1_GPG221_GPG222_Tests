@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class HealthUI : MonoBehaviour
 {
-    [SerializeField] private PlayerHealthStuffs healthReference;
+    [SerializeField] private Health healthReference;
     [SerializeField] private TextMeshPro healthTMP;
 
     private void Awake()
     {
         if (healthReference == null)
         {
-            healthReference = GetComponentInParent<PlayerHealthStuffs>();
+            healthReference = GetComponentInParent<Health>();
         }
 
         if (healthTMP == null)
@@ -20,14 +20,19 @@ public class HealthUI : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        UpdateHealthUI(0, healthReference.currentHealth.Value);
+    }
+
     private void OnEnable()
     {
-        healthReference.health.OnValueChanged += UpdateHealthUI;
+        healthReference.currentHealth.OnValueChanged += UpdateHealthUI;
     }
 
     private void OnDisable()
     {
-        healthReference.health.OnValueChanged -= UpdateHealthUI;
+        healthReference.currentHealth.OnValueChanged -= UpdateHealthUI;
     }
 
     private void UpdateHealthUI(float previousValue, float newValue)
