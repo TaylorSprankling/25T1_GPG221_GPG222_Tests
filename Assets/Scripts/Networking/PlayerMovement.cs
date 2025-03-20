@@ -31,6 +31,8 @@ public class PlayerMovement : NetworkBehaviour
     {
         // Check if it's legal/not cheating
         MoveThePlayer_ServerToClients_Rpc(inputDirection);
+        
+        // Potentially handle client side movement here to make game feel smoother for non-host clients? Then correct discrepancies in server to clients?
     }
 
     [Rpc(SendTo.ClientsAndHost, RequireOwnership = false)]
