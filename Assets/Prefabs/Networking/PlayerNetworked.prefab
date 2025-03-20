@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 6145937227240710019}
   - component: {fileID: 4594865748290614484}
   - component: {fileID: -5792596546598422130}
+  - component: {fileID: 1720032698678820306}
   m_Layer: 0
   m_Name: PlayerNetworked
   m_TagString: Untagged
@@ -640,6 +641,18 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   coins:
     m_InternalValue: 0
+--- !u!114 &1720032698678820306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910453356765157566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348f77e7c2e6fac4192abfdf5da61cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4474746496419444201
 GameObject:
   m_ObjectHideFlags: 0
