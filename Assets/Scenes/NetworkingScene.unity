@@ -2729,8 +2729,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1835151473}
   - component: {fileID: 1835151475}
-  - component: {fileID: 1835151472}
   - component: {fileID: 1835151474}
+  - component: {fileID: 1835151472}
   - component: {fileID: 1835151471}
   m_Layer: 0
   m_Name: NetworkManager
@@ -2833,7 +2833,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835151470}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98d9db9626104da59357651088226725, type: 3}
   m_Name: 
