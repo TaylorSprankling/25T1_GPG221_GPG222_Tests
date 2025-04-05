@@ -1,7 +1,7 @@
 using Anthill.AI;
 using UnityEngine;
 
-public class LookForFireState : AntAIState
+public class LookForTownsfolkState : AntAIState
 {
     private MoveForward moveForward;
     private Wander wander;
@@ -22,7 +22,7 @@ public class LookForFireState : AntAIState
     
     public override void Execute(float aDeltaTime, float aTimeScale)
     {
-        if (sensor.firesInVision.Count > 0)
+        if (sensor.townsfolkInVision.Count > 0)
         {
             Finish();
         }

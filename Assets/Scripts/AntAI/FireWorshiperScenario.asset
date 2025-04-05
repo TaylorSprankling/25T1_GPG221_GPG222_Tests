@@ -21,17 +21,19 @@ MonoBehaviour:
     - id: 2
       name: isCloseToFire
     - id: 3
-      name: canSeeTownfolk
+      name: canSeeTownsfolk
     - id: 4
-      name: isCloseToTownfolk
+      name: isCloseToTownsfolk
     - id: 5
       name: hasPraisedFire
+    - id: 6
+      name: hasConvertedTownsfolk
   actions:
   - name: PraiseFire
     isDefault: 0
-    state: {fileID: 0}
+    state: {fileID: 6650039867464271834, guid: d9148031f96d8c341a642622b149599b, type: 3}
     cost: 0
-    position: {x: 660, y: 40}
+    position: {x: 660, y: 39}
     pre:
     - id: 1
       value: 1
@@ -45,7 +47,7 @@ MonoBehaviour:
     - id: 5
       value: 1
   - name: LookForFire
-    isDefault: 0
+    isDefault: 1
     state: {fileID: 6650039867464271834, guid: fdc2a9abb7302df4791f03015681476d, type: 3}
     cost: 0
     position: {x: 220, y: 40}
@@ -59,7 +61,7 @@ MonoBehaviour:
       value: 1
   - name: MoveToFire
     isDefault: 0
-    state: {fileID: 0}
+    state: {fileID: 1194630225379876935, guid: 8e1ed77b975f20d47872f4b6149d7364, type: 3}
     cost: 0
     position: {x: 440, y: 40}
     pre:
@@ -74,13 +76,13 @@ MonoBehaviour:
       value: 1
   - name: MoveToTownfolk
     isDefault: 0
-    state: {fileID: 0}
+    state: {fileID: 6650039867464271834, guid: 9f68b0eaf27910940b16f5ae4105ea30, type: 3}
     cost: 0
-    position: {x: 1100, y: 320}
+    position: {x: 1075, y: 36}
     pre:
-    - id: 1
-      value: 1
     - id: 3
+      value: 1
+    - id: 5
       value: 1
     - id: 0
       value: 0
@@ -91,14 +93,10 @@ MonoBehaviour:
       value: 1
   - name: LookForTownsfolk
     isDefault: 0
-    state: {fileID: 0}
+    state: {fileID: 6650039867464271834, guid: f68af3a6232c57e448471599ac11d61c, type: 3}
     cost: 0
-    position: {x: 880, y: 320}
+    position: {x: 867, y: 40}
     pre:
-    - id: 1
-      value: 1
-    - id: 2
-      value: 1
     - id: 5
       value: 1
     - id: 0
@@ -108,38 +106,38 @@ MonoBehaviour:
     post:
     - id: 3
       value: 1
-  - name: GetSetOnFire
+  - name: ConvertTownsfolk
     isDefault: 0
-    state: {fileID: 0}
-    cost: 1
-    position: {x: 880, y: 40}
+    state: {fileID: 6650039867464271834, guid: 6ebf0f6fdc962b84caa296c093076787, type: 3}
+    cost: 0
+    position: {x: 1288, y: 39}
     pre:
-    - id: 1
-      value: 1
-    - id: 2
+    - id: 3
       value: 1
     - id: 5
+      value: 1
+    - id: 4
       value: 1
     - id: 0
       value: 0
     post:
-    - id: 0
+    - id: 6
       value: 1
   goals:
   - name: PANIC
     isDefault: 0
-    position: {x: 1100, y: 40}
+    position: {x: 1499, y: 180}
     conditions:
     - id: 0
       value: 1
-  - name: WololoConvertTownsfolk
+  - name: CelebrateInWololo
     isDefault: 1
-    position: {x: 1320, y: 320}
+    position: {x: 1495, y: 42}
     conditions:
-    - id: 4
+    - id: 6
       value: 1
   worldStates:
-  - position: {x: 218, y: 622}
+  - position: {x: 207, y: 337}
     isAutoUpdate: 1
     list:
     - id: 0
@@ -153,4 +151,6 @@ MonoBehaviour:
     - id: 4
       value: 0
     - id: 5
+      value: 0
+    - id: 6
       value: 0

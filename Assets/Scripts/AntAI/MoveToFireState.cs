@@ -1,36 +1,36 @@
 using Anthill.AI;
 using UnityEngine;
 
-public class LookForFireState : AntAIState
+public class MoveToFireState : AntAIState
 {
     private MoveForward moveForward;
-    private Wander wander;
+    private TurnTowards turnTowards;
     private FireWorshiperSensor sensor;
     
     public override void Create(GameObject aGameObject)
     {
         moveForward = GetComponentInParent<MoveForward>();
-        wander = GetComponentInParent<Wander>();
+        turnTowards = GetComponentInParent<TurnTowards>();
         sensor = GetComponentInParent<FireWorshiperSensor>();
     }
     
     public override void Enter()
     {
+        turnTowards.TargetPosition = sensor.firesInVision[0].position;
+        turnTowards.HasTarget = true;
         moveForward.enabled = true;
-        wander.enabled = true;
+        turnTowards.enabled = true;
     }
     
     public override void Execute(float aDeltaTime, float aTimeScale)
     {
-        if (sensor.firesInVision.Count > 0)
-        {
-            Finish();
-        }
+        turnTowards.TargetPosition = sensor.firesInVision[0].position;
     }
     
     public override void Exit()
     {
+        turnTowards.HasTarget = false;
         moveForward.enabled = false;
-        wander.enabled = false;
+        turnTowards.enabled = false;
     }
 }
