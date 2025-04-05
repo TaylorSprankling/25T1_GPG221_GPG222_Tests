@@ -46,7 +46,7 @@ MonoBehaviour:
       value: 1
   - name: LookForFire
     isDefault: 0
-    state: {fileID: 0}
+    state: {fileID: 6650039867464271834, guid: fdc2a9abb7302df4791f03015681476d, type: 3}
     cost: 0
     position: {x: 220, y: 40}
     pre:

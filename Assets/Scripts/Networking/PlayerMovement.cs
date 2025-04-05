@@ -11,34 +11,34 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (rb == null) rb = GetComponent<Rigidbody>();
     }
-
+    
     private void FixedUpdate()
     {
-        if (!IsLocalPlayer) return;
         HandleMovement();
     }
 
     private void HandleMovement()
     {
-        Vector2 inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (inputDirection.magnitude < 0.1f) return;
-        Vector2 normalizedDirection = inputDirection.normalized; // Unsure if GetAxis is normalized already
-        MoveThePlayer_RequestToServer_Rpc(normalizedDirection);
+        if (!IsLocalPlayer) return;
+        Vector2 inputDirection = new(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (inputDirection == Vector2.zero) return;
+        inputDirection.Normalize(); // Unsure if GetAxis is normalized already
+        MoveThePlayer_ClientToServer_Rpc(inputDirection);
     }
-    
+
     [Rpc(SendTo.Server, RequireOwnership = true)]
-    private void MoveThePlayer_RequestToServer_Rpc(Vector2 inputDirection)
+    private void MoveThePlayer_ClientToServer_Rpc(Vector2 inputDirection)
     {
         // Check if it's legal/not cheating
         MoveThePlayer_ServerToClients_Rpc(inputDirection);
-        
         // Potentially handle client side movement here to make game feel smoother for non-host clients? Then correct discrepancies in server to clients?
     }
 
-    [Rpc(SendTo.ClientsAndHost, RequireOwnership = false)]
+    [Rpc(SendTo.ClientsAndHost)]
     private void MoveThePlayer_ServerToClients_Rpc(Vector2 inputDirection)
     {
-        Vector3 moveDirection = new Vector3(inputDirection.x, 0, inputDirection.y);
+        if (!IsServer) return;
+        Vector3 moveDirection = new(inputDirection.x, 0, inputDirection.y);
         rb.AddForce(moveDirection * speed, ForceMode.Acceleration);
         
         float facingAngle = Vector3.SignedAngle(transform.forward, moveDirection.normalized, Vector3.up);

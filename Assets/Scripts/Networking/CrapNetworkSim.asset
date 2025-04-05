@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7eec304968d4bc484aad4e7dcd3c641, type: 3}
   m_Name: CrapNetworkSim
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: CrapNetworkSim
-  <Description>k__BackingField: its a sim for a crap network
-  <PacketDelayMs>k__BackingField: 150
-  <PacketJitterMs>k__BackingField: 50
+  <Name>k__BackingField: CustomNetworkSim
+  <Description>k__BackingField: 
+  <PacketDelayMs>k__BackingField: 50
+  <PacketJitterMs>k__BackingField: 5
   <PacketLossInterval>k__BackingField: 0
-  <PacketLossPercent>k__BackingField: 10
+  <PacketLossPercent>k__BackingField: 1
