@@ -17,51 +17,64 @@ public class FireWorshiperSensor : MonoBehaviour, ISense
 {
     [SerializeField] private Vision vision;
     [SerializeField] private Proximity proximity;
+    [SerializeField] private GameObject fireWorshiperPrefab;
     
-    [SerializeField] private bool isOnFire;
-    [SerializeField] private bool canSeeFire;
-    [SerializeField] private bool isCloseToFire;
-    [SerializeField] private bool hasPraisedFire;
-    [SerializeField] private bool canSeeTownsfolk;
-    [SerializeField] private bool isCloseToTownsfolk;
-    [SerializeField] private bool hasConvertedTownsfolk;
+    [SerializeField] [ReadOnly] private bool isOnFire;
+    [SerializeField] [ReadOnly] private bool canSeeFire;
+    [SerializeField] [ReadOnly] private bool isCloseToFire;
+    [SerializeField] [ReadOnly] private bool hasPraisedFire;
+    [SerializeField] [ReadOnly] private bool canSeeTownsfolk;
+    [SerializeField] [ReadOnly] private bool isCloseToTownsfolk;
+    [SerializeField] [ReadOnly] private bool hasConvertedTownsfolk;
     
-    public List<Transform> firesInVision;
-    public List<Transform> townsfolkInVision;
-    
+    public GameObject TargetFire { get; private set; }
+    public GameObject TargetTownsfolk { get; private set; }
+    public GameObject FireWorshiperPrefab => fireWorshiperPrefab;
     public bool HasPraisedFire { get => hasPraisedFire; set => hasPraisedFire = value; }
-    public bool HasConvertedTownsfolk { get => hasConvertedTownsfolk; set => hasConvertedTownsfolk = value; }
     
     public void CollectConditions(AntAIAgent aAgent, AntAICondition aWorldState)
     {
+        canSeeFire = false;
+        canSeeTownsfolk = false;
         foreach (ObjectInVision target in vision.Targets)
         {
-            switch (target.isInVision)
+            if (!target.objectReference) continue; // null check
+            
+            if (!target.isInVision)
             {
-                case false when firesInVision.Contains(target.objectReference.transform):
-                    firesInVision.Remove(target.objectReference.transform);
-                    continue;
-                case false when townsfolkInVision.Contains(target.objectReference.transform):
-                    townsfolkInVision.Remove(target.objectReference.transform);
-                    continue;
-                case false:
-                    continue;
+                if (target.objectReference == TargetFire)
+                {
+                    TargetFire = null;
+                }
+                else if (target.objectReference == TargetTownsfolk)
+                {
+                    TargetTownsfolk = null;
+                }
+                continue;
             }
             
-            if (target.objectReference.layer == LayerMask.NameToLayer("Townsfolk") && !townsfolkInVision.Contains(target.objectReference.transform))
+            switch (target.objectReference.layer)
             {
-                townsfolkInVision.Add(target.objectReference.transform);
-            }
-            else if (target.objectReference.layer == LayerMask.NameToLayer("Fire") && !firesInVision.Contains(target.objectReference.transform))
-            {
-                firesInVision.Add(target.objectReference.transform);
+                case 10: // Fire
+                    canSeeFire = true;
+                    if (!TargetFire)
+                    {
+                        TargetFire = target.objectReference;
+                    }
+                    continue;
+                case 11: // Townsfolk
+                    canSeeTownsfolk = true;
+                    if (!TargetTownsfolk)
+                    {
+                        TargetTownsfolk = target.objectReference;
+                    }
+                    continue;
             }
         }
-        canSeeFire = firesInVision.Count > 0;
-        canSeeTownsfolk = townsfolkInVision.Count > 0;
         
         foreach (Collider col in proximity.CollidersInProximity)
         {
+            if (col == null) continue;
             if (col.gameObject.layer == LayerMask.NameToLayer("Fire"))
             {
                 isCloseToFire = true;
@@ -72,6 +85,7 @@ public class FireWorshiperSensor : MonoBehaviour, ISense
         
         foreach (Collider col in proximity.CollidersInProximity)
         {
+            if (col == null) continue;
             if (col.gameObject.layer == LayerMask.NameToLayer("Townsfolk"))
             {
                 isCloseToTownsfolk = true;

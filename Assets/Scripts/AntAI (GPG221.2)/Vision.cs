@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Vision : MonoBehaviour
@@ -14,19 +15,14 @@ public class Vision : MonoBehaviour
     
     public List<ObjectInVision> Targets => targets;
     
-    private void OnEnable()
+    private void Start() // hillbilly find targets
     {
-        // TODO: Subscribe to new target spawn?
-    }
-    
-    private void OnDisable()
-    {
-        // TODO: Unsubscribe relative subscriptions
-    }
-    
-    private void Update()
-    {
-        HandleVisionToTarget();
+        GameObject[] targetsInScene = GameObject.FindGameObjectsWithTag("Target");
+        
+        foreach (GameObject target in targetsInScene)
+        {
+            AddNewTarget(target);
+        }
     }
     
     public void AddNewTarget(GameObject newTarget)
@@ -35,12 +31,23 @@ public class Vision : MonoBehaviour
         targets.Add(inVisionClass);
     }
     
+    private void Update()
+    {
+        HandleVisionToTarget();
+    }
+    
     private void HandleVisionToTarget()
     {
         if (targets.Count <= 0) return;
         
-        foreach (ObjectInVision target in targets)
+        foreach (ObjectInVision target in targets.ToList())
         {
+            if (!target.objectReference)
+            {
+                targets.Remove(target);
+                continue;
+            }
+            
             // If target is out of range, target is not in vision
             if ((target.objectReference.transform.position - transform.position).magnitude > visionDistance)
             {

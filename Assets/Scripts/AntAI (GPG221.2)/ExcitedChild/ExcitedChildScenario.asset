@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: ExcitedChildScenario
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: canSeeFire
+    - id: 1
+      name: isTooCloseToFire
+    - id: 2
+      name: isTooFarFromFire
+    - id: 3
+      name: hasExpressedJoy
+    - id: 4
+      name: fireSeen
+  actions:
+  - name: LookForFire
+    isDefault: 1
+    state: {fileID: 6650039867464271834, guid: fdc2a9abb7302df4791f03015681476d, type: 3}
+    cost: 0
+    position: {x: 248, y: 60}
+    pre:
+    - id: 0
+      value: 0
+    post:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 1
+    - id: 2
+      value: 1
+  - name: ShoutYippee
+    isDefault: 0
+    state: {fileID: 4259625966414957620, guid: 9881298263cd2854e9d79826b4ed18d2, type: 3}
+    cost: 0
+    position: {x: 876, y: 62}
+    pre:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    post:
+    - id: 3
+      value: 1
+    - id: 4
+      value: 1
+  - name: RunToFire
+    isDefault: 0
+    state: {fileID: 559861503377625534, guid: 8cfdb0012d0564c4fbe2c1b39bdf2d50, type: 3}
+    cost: 0
+    position: {x: 459, y: 62}
+    pre:
+    - id: 0
+      value: 1
+    - id: 2
+      value: 1
+    - id: 4
+      value: 0
+    post:
+    - id: 2
+      value: 0
+  - name: RunFromFire
+    isDefault: 0
+    state: {fileID: 2983562499615420062, guid: fdb0592de1746ae4b9937ea168bcfbce, type: 3}
+    cost: 0
+    position: {x: 669, y: 60}
+    pre:
+    - id: 0
+      value: 1
+    - id: 1
+      value: 1
+    post:
+    - id: 1
+      value: 0
+  goals:
+  - name: ImInDanger
+    isDefault: 1
+    position: {x: 1094, y: 67}
+    conditions:
+    - id: 3
+      value: 1
+    - id: 4
+      value: 1
+  worldStates:
+  - position: {x: 248, y: 375}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0

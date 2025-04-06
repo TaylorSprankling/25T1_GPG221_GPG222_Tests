@@ -1,7 +1,7 @@
 using Anthill.AI;
 using UnityEngine;
 
-public class MoveToFireState : AntAIState
+public class MoveToTownsfolkState : AntAIState
 {
     private MoveForward moveForward;
     private TurnTowards turnTowards;
@@ -16,7 +16,7 @@ public class MoveToFireState : AntAIState
     
     public override void Enter()
     {
-        turnTowards.TargetPosition = sensor.firesInVision[0].position;
+        turnTowards.TargetPosition = sensor.TargetTownsfolk.transform.position;
         turnTowards.HasTarget = true;
         moveForward.enabled = true;
         turnTowards.enabled = true;
@@ -24,7 +24,10 @@ public class MoveToFireState : AntAIState
     
     public override void Execute(float aDeltaTime, float aTimeScale)
     {
-        turnTowards.TargetPosition = sensor.firesInVision[0].position;
+        if (sensor.TargetTownsfolk)
+        {
+            turnTowards.TargetPosition = sensor.TargetTownsfolk.transform.position;
+        }
     }
     
     public override void Exit()

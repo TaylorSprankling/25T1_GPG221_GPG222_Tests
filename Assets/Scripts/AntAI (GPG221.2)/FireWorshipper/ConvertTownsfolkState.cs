@@ -6,6 +6,7 @@ public class ConvertTownsfolkState : AntAIState
 {
     private FireWorshiperSensor sensor;
     private AudioSource audioSource;
+    private GameObject target;
     
     public override void Create(GameObject aGameObject)
     {
@@ -15,6 +16,10 @@ public class ConvertTownsfolkState : AntAIState
     
     public override void Enter()
     {
+        if (sensor.TargetTownsfolk)
+        {
+            target = sensor.TargetTownsfolk;
+        }
         audioSource.Play();
         StartCoroutine(WaitForSound());
     }
@@ -22,8 +27,11 @@ public class ConvertTownsfolkState : AntAIState
     private IEnumerator WaitForSound()
     {
         yield return new WaitForSeconds(audioSource.clip.length);
-        // Transform townsfolk object into Fire Worshipper object
+        var position = target.transform.position;
+        var rotation = target.transform.rotation;
         sensor.ResetConditions();
+        DestroyImmediate(target);
+        Instantiate(sensor.FireWorshiperPrefab, position, rotation);
         Finish();
     }
 }

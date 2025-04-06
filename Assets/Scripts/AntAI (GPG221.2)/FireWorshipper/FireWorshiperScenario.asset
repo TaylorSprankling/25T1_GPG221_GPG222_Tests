@@ -33,7 +33,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 6650039867464271834, guid: d9148031f96d8c341a642622b149599b, type: 3}
     cost: 0
-    position: {x: 660, y: 39}
+    position: {x: 648, y: 42}
     pre:
     - id: 1
       value: 1
@@ -63,7 +63,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 1194630225379876935, guid: 8e1ed77b975f20d47872f4b6149d7364, type: 3}
     cost: 0
-    position: {x: 440, y: 40}
+    position: {x: 432, y: 41}
     pre:
     - id: 1
       value: 1
@@ -78,7 +78,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 6650039867464271834, guid: 9f68b0eaf27910940b16f5ae4105ea30, type: 3}
     cost: 0
-    position: {x: 1075, y: 36}
+    position: {x: 1088, y: 42}
     pre:
     - id: 3
       value: 1
@@ -95,7 +95,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 6650039867464271834, guid: f68af3a6232c57e448471599ac11d61c, type: 3}
     cost: 0
-    position: {x: 867, y: 40}
+    position: {x: 866, y: 42}
     pre:
     - id: 5
       value: 1
@@ -110,7 +110,7 @@ MonoBehaviour:
     isDefault: 0
     state: {fileID: 6650039867464271834, guid: 6ebf0f6fdc962b84caa296c093076787, type: 3}
     cost: 0
-    position: {x: 1288, y: 39}
+    position: {x: 1312, y: 41}
     pre:
     - id: 3
       value: 1
@@ -126,13 +126,13 @@ MonoBehaviour:
   goals:
   - name: PANIC
     isDefault: 0
-    position: {x: 1499, y: 180}
+    position: {x: 1528, y: 179}
     conditions:
     - id: 0
       value: 1
   - name: CelebrateInWololo
     isDefault: 1
-    position: {x: 1495, y: 42}
+    position: {x: 1528, y: 42}
     conditions:
     - id: 6
       value: 1
