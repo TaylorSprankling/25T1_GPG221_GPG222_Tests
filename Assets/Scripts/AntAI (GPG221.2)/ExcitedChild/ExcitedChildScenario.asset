@@ -15,15 +15,13 @@ MonoBehaviour:
   conditions:
     list:
     - id: 0
-      name: canSeeFire
+      name: canSeeNewFire
     - id: 1
       name: isTooCloseToFire
     - id: 2
       name: isTooFarFromFire
     - id: 3
       name: hasExpressedJoy
-    - id: 4
-      name: fireSeen
   actions:
   - name: LookForFire
     isDefault: 1
@@ -33,10 +31,10 @@ MonoBehaviour:
     pre:
     - id: 0
       value: 0
+    - id: 1
+      value: 0
     post:
     - id: 0
-      value: 1
-    - id: 1
       value: 1
     - id: 2
       value: 1
@@ -55,8 +53,6 @@ MonoBehaviour:
     post:
     - id: 3
       value: 1
-    - id: 4
-      value: 1
   - name: RunToFire
     isDefault: 0
     state: {fileID: 559861503377625534, guid: 8cfdb0012d0564c4fbe2c1b39bdf2d50, type: 3}
@@ -67,8 +63,6 @@ MonoBehaviour:
       value: 1
     - id: 2
       value: 1
-    - id: 4
-      value: 0
     post:
     - id: 2
       value: 0
@@ -78,8 +72,6 @@ MonoBehaviour:
     cost: 0
     position: {x: 669, y: 60}
     pre:
-    - id: 0
-      value: 1
     - id: 1
       value: 1
     post:
@@ -91,8 +83,6 @@ MonoBehaviour:
     position: {x: 1094, y: 67}
     conditions:
     - id: 3
-      value: 1
-    - id: 4
       value: 1
   worldStates:
   - position: {x: 248, y: 375}
