@@ -423,6 +423,7 @@ GameObject:
   - component: {fileID: 7640087567458695438}
   - component: {fileID: 803715576634387341}
   - component: {fileID: 6319032209975655713}
+  - component: {fileID: -7121021400510264421}
   - component: {fileID: 6145937227240710019}
   - component: {fileID: 4594865748290614484}
   - component: {fileID: -5792596546598422130}
@@ -543,6 +544,27 @@ MonoBehaviour:
   rb: {fileID: 7640087567458695438}
   speed: 50
   turnSpeed: 20
+--- !u!114 &-7121021400510264421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3910453356765157566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3f4dd8dca3241468e50bfe2d937745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  colorMaterials:
+  - {fileID: 2100000, guid: 4a2ef57d307874546868a3c07fd245c4, type: 2}
+  - {fileID: 2100000, guid: 62c19298e30ea8a4d81699c664caf345, type: 2}
+  - {fileID: 2100000, guid: 2ef0d9e4dfb78cb4481ec2176afb57e4, type: 2}
+  - {fileID: 2100000, guid: 51b74efc38a7c3e4c9c547274ee2e65e, type: 2}
+  myRenderer: {fileID: 7463648086278215187}
+  thisPlayerColor:
+    m_InternalValue: 0
 --- !u!114 &6145937227240710019
 MonoBehaviour:
   m_ObjectHideFlags: 0

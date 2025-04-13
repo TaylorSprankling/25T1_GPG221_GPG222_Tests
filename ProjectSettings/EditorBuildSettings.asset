@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/NetworkingScene.unity
     guid: 2b60734915a633c4f94558df984a7efd
   - enabled: 1
-    path: Assets/Scenes/NetworkingWithWidgetsScene.unity
+    path: Assets/Scenes/NetworkingWithLobbyScene.unity
     guid: bdf6da286c15ff047baf6445f8f3e994
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
